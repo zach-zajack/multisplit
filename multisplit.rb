@@ -32,6 +32,7 @@ module Multisplit
       when "control_s" then save_splits(@path)
       when "control_S" then save_splits(ask_open_file)
       when "control_o" then open_splits(ask_open_file)
+      when "control_i" then alert(split_info, title: "Information")
       when Data.hotkeys["split"] then @splits.split
       when Data.hotkeys["reset"] then @splits.reset
       when Data.hotkeys["pause"] then @splits.pause

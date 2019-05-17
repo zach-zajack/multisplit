@@ -32,8 +32,9 @@ module Multisplit
       File.open(path, "w") { |f| f.write(YAML.dump(@splits.save)) }
     end
 
-    def to_rgb(hex)
-      hex.match(/0x(.{2})(.{2})(.{2})/).to_a.last(split_body3).map { |n| n.to_i(16) }
+    def split_info
+      "Sum of Best: #{@splits.sum_of_best}\n" \
+      "Reset Count: #{@splits.metadata['resets']}"
     end
 
     def scroll(array)

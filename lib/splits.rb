@@ -8,7 +8,7 @@ module Multisplit
       @route  = Route.new(@splits["route"])
       @metadata = @splits["metadata"]
       @pb  = @splits["personal-best"] || {}
-      @sob = @splits["sum-of-best"] || {}
+      @best = @splits["sum-of-best"] || {}
       @timer = Timer.new(@metadata["offset (sec)"])
       reset
     end
@@ -30,8 +30,7 @@ module Multisplit
     end
 
     def set_pb
-      last_split = @route.names[-1]
-      @pb = @times if @pb == {} || @pb[last_split] > @times[last_split]
+      @pb = @times if @pb == {} || sum(@pb) > sum(@times)
     end
 
     def prev
@@ -45,8 +44,9 @@ module Multisplit
     end
 
     def next
-      return if @finished
-      @index += 1 if @index + 1 < @route.length
+      return if @finished || @timer.time < 0 || @index + 1 > @route.length
+      @times[@route.names[@index]] = "-"
+      @index += 1
     end
 
     def reset
@@ -55,6 +55,7 @@ module Multisplit
       @index = -1
       @times = {}
       @route.reset
+      @metadata["resets"] += 1 unless @timer.time < 0
       @finished = false
       super
     end
@@ -65,11 +66,8 @@ module Multisplit
 
     def names
       @route.names.map.with_index do |name, i|
-        if @index == i
-          [name, Data.colors["highlight"]]
-        else
-          [name, Data.colors["normal-text"]]
-        end
+        [name, @index == i ? \
+          Data.colors["highlight"] : Data.colors["normal-text"]]
       end
     end
 
@@ -79,22 +77,26 @@ module Multisplit
       @route.names.map do |name|
         time = @times[name]
         comp = @pb[name]
-        best = time == @sob[name]
-        time = (time_sum += time) unless time.nil?
-        comp = (comp_sum += comp) unless comp.nil?
+        best = time == @best[name]
+        time = (time_sum += time) unless time.nil? || time == "-"
+        comp = (comp_sum += comp) unless comp.nil? || comp == "-"
         time.nil? ? comparison_color(comp) : delta_color(comp, time, best)
       end
     end
 
     def comparison_color(comp)
-      comp = comp.nil? ? Data.splits["text-when-empty"] : stringify(comp)
+      comp = comp.nil? || comp == "-" ? \
+        Data.splits["text-when-empty"] : stringify(comp)
       [comp, Data.colors["normal-text"]]
     end
 
     def delta_color(comp, time, best)
-      if comp.nil?
+      if comp.nil? || comp == "-"
         delta = stringify(time)
         color = Data.colors["new-time"]
+      elsif time == "-"
+        delta = Data.splits["text-when-empty"]
+        color = Data.colors["normal-text"]
       else
         delta = stringify(time - comp, true)
         color = Data.colors[delta[0] == "-" ? "ahead" : "behind"]
@@ -103,8 +105,22 @@ module Multisplit
       [delta, color]
     end
 
+    def sum(times)
+      total = 0
+      times.each { |name, time| total += time unless time == "-" }
+      return total
+    end
+
+    def sum_of_best
+      sob = sum(@best)
+      sob == 0 ? "none" : stringify(sob)
+    end
+
     def save
-      @splits.merge("personal-best" => @pb, "sum-of-best" => @sob)
+      @splits.merge(
+        "metadata" => @metadata,
+        "personal-best" => @pb,
+        "sum-of-best" => @best)
     end
 
     private
@@ -113,7 +129,7 @@ module Multisplit
       il_time = (@timer.time - @sum).round(2)
       name = @route.names[@index]
       @times[name] = il_time unless @index == -1
-      @sob[name] = il_time if @sob[name].nil? || @sob[name] > il_time
+      @best[name] = il_time if @best[name].nil? || @best[name] > il_time
       @sum += il_time
       @index += 1
     end
