@@ -1,0 +1,34 @@
+---
+
+window:
+  height: 400
+  width:  300
+  open-by-default: "splits.yaml"
+
+splits:
+  text-when-empty: "-"
+  total-splits: 10
+  upcoming-splits: 3
+  lock-last-split: true
+  decimals-before-1-min: true
+  decimals-after-1-min: false
+
+timer:
+  leading-zeros: false
+  decimals: 1
+
+colors:
+  normal-text: "#eee"
+  highlight:   "#eb2"
+  background:  "#222"
+  ahead:       "#6f6"
+  behind:      "#f66"
+  best-seg:    "#eb2"
+  new-time:    "#eee"
+
+hotkeys:
+  split: " "
+  reset: "-"
+  pause: "p"
+  next:  "down"
+  prev:  "up"

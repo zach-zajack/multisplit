@@ -1,0 +1,144 @@
+---
+metadata:
+  title: Crash 2 - No GO Abuse
+  offset (sec): -5.0
+route:
+- Turtle Woods
+- 1a:
+  - Snow Go
+  - Hang Eight
+  - The Pits
+  - Crash Dash
+- 1b:
+  - Crash Dash
+  - The Pits
+  - Hang Eight
+  - Snow Go
+- Ripper Roo
+- Snow Biz
+- 2a:
+  - Eel Deal
+  - Crash Crush
+  - Bear It
+  - Air Crash
+- 2b:
+  - Air Crash
+  - Bear It
+  - Crash Crush
+  - Eel Deal
+- Komodo Bros.
+- 3a:
+  - Plant Food
+  - Unbearable
+  - Road to Ruin
+  - Sewer or Later
+  - Bear Down
+- 3b:
+  - Unbearable
+  - Road to Ruin
+  - Sewer or Later
+  - Plant Food
+  - Bear Down
+- 3c:
+  - Unbearable
+  - Road to Ruin
+  - Plant Food
+  - Sewer or Later
+  - Bear Down
+- Tiny
+- Urination
+- 4a:
+  - Hangin' Out
+  - Bee-Having
+  - Cold Hard Crash
+  - Diggin' It
+- 4b:
+  - Bee-Having
+  - Hangin' Out
+  - Cold Hard Crash
+  - Diggin' It
+- 4c:
+  - Bee-Having
+  - Cold Hard Crash
+  - Hangin' Out
+  - Diggin' It
+- 4d:
+  - Bee-Having
+  - Cold Hard Crash
+  - Diggin' It
+  - Hangin' Out
+- N. Gin
+- Piston It Away
+- 5a:
+  - Space Doubt
+  - PacAttack
+  - Night Fight
+  - Rock It For Me
+- 5b:
+  - Rock It For Me
+  - Night Fight
+  - PacAttack
+  - Space Doubt
+- Cortex
+personal-best:
+  Turtle Woods: 0.61
+  Crash Dash: 3.48
+  The Pits: 1.22
+  Hang Eight: 0.6
+  Snow Go: 0.68
+  Ripper Roo: 2.05
+  Snow Biz: 0.76
+  Eel Deal: 1.14
+  Crash Crush: 0.26
+  Bear It: 0.57
+  Air Crash: 0.48
+  Komodo Bros.: 0.18
+  Unbearable: 1.01
+  Road to Ruin: 0.19
+  Sewer or Later: 0.18
+  Plant Food: 0.16
+  Bear Down: 0.63
+  Tiny: 0.41
+  Urination: 0.96
+  Hangin' Out: 0.19
+  Bee-Having: 0.67
+  Cold Hard Crash: 0.24
+  Diggin' It: 0.55
+  N. Gin: 0.2
+  Piston It Away: 0.18
+  Space Doubt: 0.17
+  PacAttack: 0.18
+  Night Fight: 0.16
+  Rock It For Me: 0.19
+  Cortex: 0.16
+sum-of-best:
+  Turtle Woods: 0.61
+  Snow Go: 0.68
+  Hang Eight: 0.6
+  The Pits: 0.56
+  Crash Dash: 0.34
+  Ripper Roo: 0.29
+  Snow Biz: 0.28
+  Eel Deal: 0.14
+  Crash Crush: 0.14
+  Bear It: 0.08
+  Air Crash: 0.29
+  Komodo Bros.: 0.18
+  Plant Food: 0.16
+  Unbearable: 0.14
+  Road to Ruin: 0.16
+  Sewer or Later: 0.18
+  Bear Down: 0.28
+  Tiny: 0.29
+  Urination: 0.12
+  Hangin' Out: 0.16
+  Bee-Having: 0.1
+  Cold Hard Crash: 0.16
+  Diggin' It: 0.12
+  N. Gin: 0.2
+  Piston It Away: 0.18
+  Space Doubt: 0.16
+  PacAttack: 0.12
+  Night Fight: 0.16
+  Rock It For Me: 0.12
+  Cortex: 0.16
