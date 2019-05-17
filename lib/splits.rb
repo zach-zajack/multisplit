@@ -27,6 +27,9 @@ module Multisplit
     def finish
       @timer.pause
       @finished = true
+    end
+
+    def set_pb
       last_split = @route.names[-1]
       @pb = @times if @pb == {} || @pb[last_split] > @times[last_split]
     end
@@ -43,10 +46,11 @@ module Multisplit
 
     def next
       return if @finished
-      @index += 1
+      @index += 1 if @index + 1 < @route.length
     end
 
     def reset
+      set_pb if @finished
       @sum = 0
       @index = -1
       @times = {}
