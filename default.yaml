@@ -3,7 +3,6 @@
 window:
   height: 400
   width:  300
-  open-by-default: "splits.yaml"
 
 splits:
   text-when-empty: "-"

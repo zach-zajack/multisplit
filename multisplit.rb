@@ -7,13 +7,14 @@ require "lib/timer"
 require "lib/window"
 
 module Multisplit
-  Data.reload
+  Data.init_app_data
+  Data.open_settings("default.yaml")
 
   Shoes.app title: "Multisplit",
     height: Data.window["height"], width: Data.window["width"] do
     extend Window
 
-    style Shoes::Para,  stroke: Data.colors["normal-text"]
+    style Shoes::Para,  stroke: Data.colors["normal-text"], weight: "bold"
     style Shoes::Title, stroke: Data.colors["normal-text"]
 
     background Data.colors["background"]
@@ -21,7 +22,7 @@ module Multisplit
     @body  = stack
     @timer = title "", margin_right: 30, align: "right"
 
-    path = Data.window["open-by-default"]
+    path = Data.app_data[:splits]
     path.nil? ? open_basic : open_splits(path)
 
     animate(60) { @timer.replace(@splits.timer.display) }
@@ -32,6 +33,7 @@ module Multisplit
       when "control_s" then save_splits(@path)
       when "control_S" then save_splits(ask_open_file)
       when "control_o" then open_splits(ask_open_file)
+      when "control_e" then open_settings(ask_open_file)
       when "control_i" then alert(split_info, title: "Information")
       when Data.hotkeys["split"] then @splits.split
       when Data.hotkeys["reset"] then @splits.reset

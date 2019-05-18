@@ -21,10 +21,16 @@ module Multisplit
 
     def open_splits(path)
       return if path.nil?
+      Data.save_to_config(splits: path)
       @path = path
       @splits = Splits.new(@path)
       @body.clear { body }
       reload_splits
+    end
+
+    def open_settings(path)
+      return if path.nil?
+      Data.open_settings(ask_open_file)
     end
 
     def save_splits(path)
@@ -57,7 +63,7 @@ module Multisplit
       stack do
         height = Data.splits["total-splits"] * 28
         @head = para @splits.metadata["title"], \
-          margin_top: 15, align: "center", weight: "bold"
+          margin_top: 15, align: "center"
         flow do
           @names = stack width: 0.7, height: height, margin_left: 20
           @times = stack width: 0.3, height: height, margin_right: 30
