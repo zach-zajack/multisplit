@@ -55,7 +55,7 @@ module Multisplit
 
     def body
       stack do
-        height = Data.splits["total-splits"] * 27
+        height = Data.splits["total-splits"] * 28
         @head = para @splits.metadata["title"], \
           margin_top: 15, align: "center", weight: "bold"
         flow do
