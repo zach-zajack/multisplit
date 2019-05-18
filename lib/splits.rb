@@ -91,12 +91,12 @@ module Multisplit
     end
 
     def delta_color(comp, time, best)
-      if comp.nil? || comp == "-"
-        delta = stringify(time)
-        color = Data.colors["new-time"]
-      elsif time == "-"
+      if time == "-"
         delta = Data.splits["text-when-empty"]
         color = Data.colors["normal-text"]
+      elsif comp.nil? || comp == "-"
+        delta = stringify(time)
+        color = Data.colors["new-time"]
       else
         delta = stringify(time - comp, true)
         color = Data.colors[delta[0] == "-" ? "ahead" : "behind"]
