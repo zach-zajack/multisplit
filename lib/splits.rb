@@ -21,7 +21,7 @@ module Multisplit
       return if @finished
       add_time if @timer.time > 0
       @index = 0 if @index == -1
-      @index < @route.length ? super : finish
+      @index < @route.total_length ? super : finish
     end
 
     def finish
@@ -44,7 +44,7 @@ module Multisplit
     end
 
     def next
-      return if @finished || @timer.time < 0 || @index + 1 > @route.length
+      return if @finished || @timer.time < 0 || @index + 1 > @route.total_length
       @times[@route.names[@index]] = "-"
       @index += 1
     end
