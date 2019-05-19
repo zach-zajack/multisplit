@@ -14,7 +14,7 @@ module Multisplit
     end
 
     def start
-      return unless @paused
+      return unless reset?
       @start_time = now - @offset
       @state = :running
     end
@@ -26,6 +26,7 @@ module Multisplit
     end
 
     def pause
+      return unless running?
       @state = :paused
       @pause_time = now
     end
@@ -44,8 +45,16 @@ module Multisplit
       @state == :paused
     end
 
+    def reset?
+      @state == :reset
+    end
+
+    def running?
+      @state == :running
+    end
+
     def time
-      (paused? ? @pause_time : now) - @start_time
+      (running? ? now : @pause_time) - @start_time
     end
 
     def display
