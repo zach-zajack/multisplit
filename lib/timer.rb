@@ -37,6 +37,10 @@ module Multisplit
       @start_time += pause_elapse_time
     end
 
+    def toggle_pause
+      paused? ? unpause : pause
+    end
+
     def undo_pause
       @state = :running
     end
@@ -51,6 +55,10 @@ module Multisplit
 
     def running?
       @state == :running
+    end
+
+    def counting_down?
+      time < 0 || reset?
     end
 
     def time

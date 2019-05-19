@@ -19,8 +19,8 @@ module Multisplit
 
     def split
       return if @finished
-      add_time if @timer.time > 0
-      @index = 0 if @index == -1
+      add_time unless @timer.counting_down?
+      @index = 0 if @timer.reset?
       @index < @route.total_length ? super : finish
     end
 
@@ -36,26 +36,26 @@ module Multisplit
     def prev
       return if @index <= 0
       if @finished
-        @timer.unpause
+        @timer.undo_pause
         @finished = false
       end
       @index -= 1
-      @times.delete(@route.names[@index])
+      @times.delete(name)
+      @best.delete(name)
     end
 
     def next
-      return if @finished || @timer.time < 0 || @index + 1 > @route.total_length
-      @times[@route.names[@index]] = "-"
+      return if @timer.counting_down? || @index + 1 >= @route.total_length
+      @times[name] = "-"
       @index += 1
     end
 
     def reset
       set_pb if @finished
-      @sum = 0
       @index = -1
       @times = {}
       @route.reset
-      @metadata["resets"] += 1 unless @timer.time < 0
+      @metadata["resets"] += 1 unless @timer.counting_down?
       @finished = false
       super
     end
@@ -125,12 +125,14 @@ module Multisplit
 
     private
 
+    def name
+      @route.names[@index]
+    end
+
     def add_time
-      il_time = (@timer.time - @sum).round(2)
-      name = @route.names[@index]
-      @times[name] = il_time unless @index == -1
+      il_time = (@timer.time - sum(@times)).round(2)
+      @times[name] = il_time
       @best[name] = il_time if @best[name].nil? || @best[name] > il_time
-      @sum += il_time
       @index += 1
     end
 
