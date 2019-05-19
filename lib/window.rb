@@ -61,12 +61,11 @@ module Multisplit
 
     def body
       stack do
-        height = Data.splits["total-splits"] * 28
         @head = para @splits.metadata["title"], \
           margin_top: 15, align: "center"
         flow do
-          @names = stack width: 0.7, height: height, margin_left: 20
-          @times = stack width: 0.3, height: height, margin_right: 30
+          @names = stack width: 0.7, margin_left: 20
+          @times = stack width: 0.3, margin_right: 30
         end
       end
     end
