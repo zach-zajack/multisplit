@@ -1,19 +1,5 @@
 module Multisplit
   module Window
-    def reload_splits
-      return if @splits.basic?
-      @names.clear do
-        scroll(@splits.names).each do |name, color|
-          para name, margin: 5, stroke: color
-        end
-      end
-      @times.clear do
-        scroll(@splits.times).each do |time, color|
-          para time, margin: 5, stroke: color, align: "right"
-        end
-      end
-    end
-
     def open_basic
       @splits = BasicSplits.new
       @body.clear
@@ -41,22 +27,6 @@ module Multisplit
     def split_info
       "Sum of Best: #{@splits.sum_of_best}\n" \
       "Reset Count: #{@splits.metadata['resets']}"
-    end
-
-    def scroll(array)
-      total = Data.splits["total-splits"]
-      max = @splits.names.length - total
-      prev_shown = total - Data.splits["upcoming-splits"]
-
-      hidden = @splits.index - prev_shown
-      hidden = 0 if hidden < 0
-      hidden = max if hidden > max
-
-      if Data.splits["lock-last-split"]
-        return array[hidden, total - 1] << array[-1]
-      else
-        return array[hidden, total]
-      end
     end
 
     def body

@@ -1,10 +1,11 @@
 require "yaml"
-require "lib/data"
-require "lib/route"
-require "lib/timer"
-require "lib/basic_splits"
-require "lib/splits"
-require "lib/window"
+require "models/data"
+require "models/route"
+require "models/timer"
+require "models/basic_splits"
+require "models/splits"
+require "ui/window"
+require "ui/split_table"
 
 module Multisplit
   Data.init_app_data
@@ -13,6 +14,7 @@ module Multisplit
   Shoes.app title: "Multisplit",
     height: Data.window["height"], width: Data.window["width"] do
     extend Window
+    extend SplitTable
 
     style Shoes::Title, stroke: Data.colors["normal-text"]
     style Shoes::Para,  stroke: Data.colors["normal-text"], \
