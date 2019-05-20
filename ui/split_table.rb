@@ -29,7 +29,7 @@ module Multisplit
       @splits.route.names.map do |name|
         time = @splits.times[name]
         comp = @splits.pb[name]
-        best = time == @splits.best[name]
+        best = time == @splits.best[name] || @splits.best[name].nil?
         time = (time_sum += time) unless time.nil? || time == "-"
         comp = (comp_sum += comp) unless comp.nil? || comp == "-"
         time.nil? ? comparison_w_color(comp) : delta_w_color(comp, time, best)
@@ -53,6 +53,7 @@ module Multisplit
         delta = stringify(time - comp, true)
         color = Data.colors[delta[0] == "-" ? "ahead" : "behind"]
       end
+      p best
       color = Data.colors["best-seg"] if best
       [delta, color]
     end

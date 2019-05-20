@@ -2,7 +2,8 @@ module Multisplit
   class Splits < BasicSplits
     attr_reader :names, :route, :metadata, :pb, :best, :index, :times
 
-    def initialize(path = nil)
+    def initialize(app, path = nil)
+      @app      = app
       @splits   = YAML.load(File.read(path))
       @names    = @splits["names"]
       @route    = Route.new(@splits["route"])
@@ -41,7 +42,7 @@ module Multisplit
       end
       @index -= 1
       @times.delete(name)
-      @best.delete(name)
+      @best_temp.delete(name)
     end
 
     def next
@@ -54,6 +55,9 @@ module Multisplit
       set_pb if @finished
       @index = -1
       @times = {}
+      @best.merge!(@best_temp) if @best_temp&.any? && \
+        @app.confirm("Do you want to save your best segments?")
+      @best_temp = {}
       @route.reset
       @metadata["resets"] += 1 unless @timer.counting_down?
       @finished = false
@@ -91,7 +95,7 @@ module Multisplit
     def add_time
       il_time = (@timer.time - sum(@times)).round(2)
       @times[name] = il_time
-      @best[name] = il_time if @best[name].nil? || @best[name] > il_time
+      @best_temp[name] = il_time if @best[name].nil? || @best[name] > il_time
       @index += 1
     end
   end

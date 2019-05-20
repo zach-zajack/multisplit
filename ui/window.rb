@@ -9,7 +9,7 @@ module Multisplit
       return if path.nil?
       Data.save_to_config(splits: path)
       @path = path
-      @splits = Splits.new(@path)
+      @splits = Splits.new(self, @path)
       @body.clear { body }
       reload_splits
     end
