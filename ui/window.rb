@@ -36,19 +36,19 @@ module Multisplit
 
     def body
       stack do
-        @head = para @splits.metadata["title"], margin_top: 15, align: "center"
+        @head = para @splits.metadata["title"], align: "center"
         flow do
-          @names = stack width: 0.5, margin_left: 20
-          @col1 = stack width: 0.2
-          @col2 = stack width: 0.3, margin_right: 30
+          @names = stack width: 0.5, wrap: "trim"
+          @col1 = stack width: 0.25
+          @col2 = stack width: 0.25
         end
         timer
-        @metadata = stack margin_left: 20
+        @metadata = stack
       end
     end
 
     def timer
-      @timer = title margin_right: 30, align: "right"
+      @timer = title align: "right"
     end
   end
 end

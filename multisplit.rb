@@ -21,12 +21,11 @@ module Multisplit
     extend Metadata
 
     style Shoes::Title, stroke: Data.colors["normal-text"]
-    style Shoes::Para,  stroke: Data.colors["normal-text"], \
-      weight: "bold", wrap: "trim"
+    style Shoes::Para,  stroke: Data.colors["normal-text"], weight: "bold"
 
     background Data.colors["background"]
 
-    @body = stack
+    @body = stack margin: 15
 
     path = Data.app_data[:splits]
     path.nil? ? open_basic : open_splits(path)

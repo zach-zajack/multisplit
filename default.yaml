@@ -2,7 +2,7 @@
 
 window:
   height: 500
-  width:  300
+  width:  320
 
 splits:
   text-when-empty: "-"
