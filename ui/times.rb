@@ -31,7 +31,7 @@ module Multisplit
         delta = stringify(time - comp, true)
         color = Data.colors[delta[0] == "-" ? "ahead" : "behind"]
       end
-      color = Data.colors["best-seg"] if best
+      color = Data.colors["best-seg"] if best && !time.nil?
       [delta, color]
     end
 

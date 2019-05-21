@@ -38,8 +38,9 @@ module Multisplit
       stack do
         @head = para @splits.metadata["title"], margin_top: 15, align: "center"
         flow do
-          @names = stack width: 0.7, margin_left: 20
-          @times = stack width: 0.3, margin_right: 30
+          @names = stack width: 0.5, margin_left: 20
+          @col1 = stack width: 0.2
+          @col2 = stack width: 0.3, margin_right: 30
         end
         timer
         @metadata = stack margin_left: 20
