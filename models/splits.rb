@@ -76,8 +76,9 @@ module Multisplit
     end
 
     def sum_of_best
-      sob = sum(@best)
-      sob.zero? ? Data.splits["text-when-empty"] : @app.stringify(sob)
+      merged = @best.merge(@best_temp) unless @best.nil?
+      merged.nil? || merged.include?("-") ? \
+        Data.splits["text-when-empty"] : @app.stringify(sum(merged))
     end
 
     def save
