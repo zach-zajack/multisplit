@@ -11,7 +11,6 @@ require "ui/metadata"
 
 module Multisplit
   Data.init_app_data
-  Data.open_settings("default.yaml")
 
   Shoes.app title: "Multisplit",
     height: Data.window["height"], width: Data.window["width"] do

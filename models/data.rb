@@ -9,7 +9,9 @@ module Multisplit
       APPFILE = File.join(APPDIR, "config.yaml")
 
       def init_app_data
-        @app_data = File.exist?(APPFILE) ? YAML.load(File.read(APPFILE)) : {}
+        @app_data = File.exist?(APPFILE) ? \
+          YAML.load(File.read(APPFILE)) : {settings: "default.yaml"}
+        open_settings(@app_data[:settings])
       end
 
       def open_settings(path)

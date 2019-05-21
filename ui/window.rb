@@ -21,7 +21,7 @@ module Multisplit
 
     def open_settings(path)
       return if path.nil?
-      Data.open_settings(ask_open_file)
+      Data.open_settings(path)
     end
 
     def save_splits(path)
