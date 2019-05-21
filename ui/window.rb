@@ -1,8 +1,13 @@
 module Multisplit
   module Window
+    def reload_splits
+      reload_splits_table
+      reload_metadata
+    end
+
     def open_basic
       @splits = BasicSplits.new
-      @body.clear
+      @body.clear { timer }
     end
 
     def open_splits(path)
@@ -31,13 +36,18 @@ module Multisplit
 
     def body
       stack do
-        @head = para @splits.metadata["title"], \
-          margin_top: 15, align: "center"
+        @head = para @splits.metadata["title"], margin_top: 15, align: "center"
         flow do
           @names = stack width: 0.7, margin_left: 20
           @times = stack width: 0.3, margin_right: 30
         end
+        timer
+        @metadata = stack margin_left: 20
       end
+    end
+
+    def timer
+      @timer = title margin_right: 30, align: "right"
     end
   end
 end

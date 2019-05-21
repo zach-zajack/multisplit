@@ -1,7 +1,6 @@
 module Multisplit
   module SplitTable
-    def reload_splits
-      return if @splits.basic?
+    def reload_splits_table
       @names.clear do
         scroll(names).each do |name, color|
           para name, margin: 5, stroke: color
@@ -29,33 +28,11 @@ module Multisplit
       @splits.route.names.map do |name|
         time = @splits.times[name]
         comp = @splits.pb[name]
-        best = time == @splits.best[name] || @splits.best[name].nil?
+        best = time == @splits.best_temp[name] || @splits.best[name].nil?
         time = (time_sum += time) unless time.nil? || time == "-"
         comp = (comp_sum += comp) unless comp.nil? || comp == "-"
-        time.nil? ? comparison_w_color(comp) : delta_w_color(comp, time, best)
+        time.nil? ? colorize_comparison(comp) : colorize_delta(comp, time, best)
       end
-    end
-
-    def comparison_w_color(comp)
-      comp = comp.nil? || comp == "-" ? \
-        Data.splits["text-when-empty"] : stringify(comp)
-      [comp, Data.colors["normal-text"]]
-    end
-
-    def delta_w_color(comp, time, best)
-      if time == "-"
-        delta = Data.splits["text-when-empty"]
-        color = Data.colors["normal-text"]
-      elsif comp.nil? || comp == "-"
-        delta = stringify(time)
-        color = Data.colors["new-time"]
-      else
-        delta = stringify(time - comp, true)
-        color = Data.colors[delta[0] == "-" ? "ahead" : "behind"]
-      end
-      p best
-      color = Data.colors["best-seg"] if best
-      [delta, color]
     end
 
     def scroll(array)
@@ -64,7 +41,7 @@ module Multisplit
       prev_shown = total - Data.splits["upcoming-splits"]
 
       hidden = @splits.index - prev_shown
-      hidden = 0 if hidden < 0
+      hidden = 0 if hidden.negative?
       hidden = max if hidden > max
 
       if Data.splits["lock-last-split"]
@@ -72,14 +49,6 @@ module Multisplit
       else
         return array[hidden, total]
       end
-    end
-
-    def stringify(time, delta = false)
-      sign = time.positive? && delta ? "+" : ""
-      before = Data.splits["decimals-before-1-min"] && time < 60
-      after  = Data.splits["decimals-after-1-min"] && time >= 60
-      decimals = before || after ? 1 : 0
-      sign + Timer.stringify(time, Data.splits["leading-zeros"], decimals)
     end
   end
 end

@@ -1,13 +1,5 @@
 module Multisplit
   class Timer
-    def self.stringify(time, leading_zeros, decimals)
-      sign = time < 0 ? "-" : ""
-      time = time.abs
-      str = Time.at(time).utc.strftime("%H:%M:%S.%#{decimals}N")
-      str.sub!(/\..*$/, "") if decimals == 0
-      leading_zeros ? sign + str : sign + str.sub!(/^[0:]{1,7}/, "")
-    end
-
     def initialize(offset = 0)
       @offset = offset
       reset
@@ -37,10 +29,6 @@ module Multisplit
       @start_time += pause_elapse_time
     end
 
-    def toggle_pause
-      paused? ? unpause : pause
-    end
-
     def undo_pause
       @state = :running
     end
@@ -58,15 +46,11 @@ module Multisplit
     end
 
     def counting_down?
-      time < 0 || reset?
+      time.negative? || reset?
     end
 
     def time
       (running? ? now : @pause_time) - @start_time
-    end
-
-    def display
-      Timer.stringify(time, Data.timer["leading-zeros"], Data.timer["decimals"])
     end
 
     private

@@ -1,7 +1,7 @@
 ---
 
 window:
-  height: 400
+  height: 500
   width:  300
 
 splits:
@@ -15,6 +15,11 @@ splits:
 timer:
   leading-zeros: false
   decimals: 1
+
+metadata:
+  show-prev-seg-against-best: true
+  show-possible-timesave: true
+  show-sum-of-best: true
 
 colors:
   normal-text: "#eee"

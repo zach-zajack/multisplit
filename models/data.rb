@@ -1,7 +1,8 @@
 module Multisplit
   module Data
     class << self
-      attr_reader :app_data, :window, :splits, :timer, :colors, :hotkeys
+      attr_reader :app_data, \
+        :window, :splits, :timer, :colors, :hotkeys, :metadata
 
       BASEDIR = "#{RUBY_PLATFORM =~ /linux/ ? '.multisplit' : 'Multisplit'}"
       APPDIR  = File.expand_path("../#{BASEDIR}", LIB_DIR)
@@ -14,11 +15,12 @@ module Multisplit
       def open_settings(path)
         save_to_config(settings: path)
         data = YAML.load(File.read(path))
-        @window  = data["window"]
-        @splits  = data["splits"]
-        @timer   = data["timer"]
-        @colors  = data["colors"]
-        @hotkeys = data["hotkeys"]
+        @window   = data["window"]
+        @splits   = data["splits"]
+        @timer    = data["timer"]
+        @metadata = data["metadata"]
+        @colors   = data["colors"]
+        @hotkeys  = data["hotkeys"]
       end
 
       def save_to_config(hash)

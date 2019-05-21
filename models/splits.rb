@@ -1,6 +1,7 @@
 module Multisplit
   class Splits < BasicSplits
-    attr_reader :names, :route, :metadata, :pb, :best, :index, :times
+    attr_reader :names, :route, :metadata, \
+      :pb, :best, :index, :times, :best_temp
 
     def initialize(app, path = nil)
       @app      = app
@@ -31,7 +32,7 @@ module Multisplit
     end
 
     def set_pb
-      @pb = @times if @pb == {} || sum(@pb) > sum(@times)
+      @pb = @times if @pb.empty? || sum(@pb) > sum(@times)
     end
 
     def prev
@@ -76,7 +77,7 @@ module Multisplit
 
     def sum_of_best
       sob = sum(@best)
-      sob == 0 ? "none" : stringify(sob)
+      sob.zero? ? Data.splits["text-when-empty"] : @app.stringify(sob)
     end
 
     def save
@@ -86,11 +87,15 @@ module Multisplit
         "sum-of-best" => @best)
     end
 
-    private
-
     def name
       @route.names[@index]
     end
+
+    def prev_name
+      @route.names[@index - 1] unless @index.negative?
+    end
+
+    private
 
     def add_time
       il_time = (@timer.time - sum(@times)).round(2)
