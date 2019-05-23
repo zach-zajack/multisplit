@@ -36,9 +36,9 @@ module Multisplit
       time_sum = 0
       comp_sum = 0
       @splits.route.names.map do |name|
-        time = @splits.times[name]
-        comp = @splits.pb[name]
-        best = time == @splits.best_temp[name] || @splits.best[name].nil?
+        time = @splits.live_times[name]
+        comp = @splits.times[name]
+        best = time == @splits.live_bests[name] || @splits.bests[name].nil?
         time = (time_sum += time) unless time.nil? || time == "-"
         comp = (comp_sum += comp) unless comp.nil? || comp == "-"
         block.call(comp, time, best)

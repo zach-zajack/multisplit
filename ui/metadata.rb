@@ -10,8 +10,8 @@ module Multisplit
 
     def prev_seg_best
       prev = @splits.prev_name
-      prev_best = @splits.best[prev]
-      prev_time = @splits.times[prev]
+      prev_best = @splits.bests[prev]
+      prev_time = @splits.live_times[prev]
       best = !(prev_best.nil? || prev_time.nil? || prev_best < prev_time)
       colorized = colorize_delta(prev_best, prev_time, best)
       flow do
@@ -21,11 +21,11 @@ module Multisplit
     end
 
     def pos_timesave
-      prev = @splits.prev_name
-      prev_best = @splits.best[prev]
-      prev_comp = @splits.pb[prev]
-      diff = prev_best.nil? || prev_comp.nil? ? \
-        Data.splits["text-when-empty"] : stringify(prev_comp - prev_best)
+      name = @splits.name
+      best = @splits.bests[name]
+      comp = @splits.times[name]
+      diff = best.nil? || @splits.index.negative? || comp.nil? ? \
+        Data.splits["text-when-empty"] : stringify(comp - best)
       para "Possible timesave: #{diff}"
     end
 

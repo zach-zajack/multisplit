@@ -1,7 +1,7 @@
 module Multisplit
   class Splits < BasicSplits
     attr_reader :names, :route, :metadata, \
-      :pb, :best, :index, :times, :best_temp
+      :times, :bests, :index, :live_times, :live_bests
 
     def initialize(app, path = nil)
       @app      = app
@@ -9,8 +9,8 @@ module Multisplit
       @names    = @splits["names"]
       @route    = Route.new(@splits["route"])
       @metadata = @splits["metadata"]
-      @pb       = @splits["personal-best"] || {}
-      @best     = @splits["sum-of-best"]   || {}
+      @times    = @splits["personal-best"] || {}
+      @bests    = @splits["sum-of-best"]   || {}
       @timer    = Timer.new(@metadata["offset (sec)"])
       reset
     end
@@ -32,7 +32,7 @@ module Multisplit
     end
 
     def set_pb
-      @pb = @times if @pb.empty? || sum(@pb) > sum(@times)
+      @times = @live_times if @times.empty? || sum(@times) > sum(@live_times)
     end
 
     def prev
@@ -42,23 +42,23 @@ module Multisplit
         @finished = false
       end
       @index -= 1
-      @times.delete(name)
-      @best_temp.delete(name)
+      @live_times.delete(name)
+      @live_bests.delete(name)
     end
 
     def next
       return if @timer.counting_down? || @index + 1 >= @route.total_length
-      @times[name] = "-"
+      @live_times[name] = "-"
       @index += 1
     end
 
     def reset
       set_pb if @finished
       @index = -1
-      @times = {}
-      @best.merge!(@best_temp) if @best_temp&.any? && \
+      @live_times = {}
+      @bests.merge!(@live_bests) if @live_bests&.any? && \
         @app.confirm("Do you want to save your best segments?")
-      @best_temp = {}
+      @live_bests = {}
       @route.reset
       @metadata["resets"] += 1 unless @timer.counting_down?
       @finished = false
@@ -76,7 +76,7 @@ module Multisplit
     end
 
     def sum_of_best
-      merged = @best.merge(@best_temp) unless @best.nil?
+      merged = @bests.merge(@live_bests) unless @bests.nil?
       merged.nil? || merged.include?("-") ? \
         Data.splits["text-when-empty"] : @app.stringify(sum(merged))
     end
@@ -84,8 +84,8 @@ module Multisplit
     def save
       @splits.merge(
         "metadata" => @metadata,
-        "personal-best" => @pb,
-        "sum-of-best" => @best)
+        "personal-best" => @times,
+        "sum-of-best" => @bests)
     end
 
     def name
@@ -99,9 +99,9 @@ module Multisplit
     private
 
     def add_time
-      il_time = (@timer.time - sum(@times)).round(2)
-      @times[name] = il_time
-      @best_temp[name] = il_time if @best[name].nil? || @best[name] > il_time
+      il_time = (@timer.time - sum(@live_times)).round(2)
+      @live_times[name] = il_time
+      @live_bests[name] = il_time if @bests[name].nil? || @bests[name] > il_time
       @index += 1
     end
   end
