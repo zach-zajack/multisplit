@@ -1,11 +1,5 @@
 module Multisplit
   module Window
-    def reload_window
-      style Shoes::Title, stroke: Data.colors["normal-text"]
-      style Shoes::Para, stroke: Data.colors["normal-text"], weight: "bold"
-      background Data.colors["background"]
-    end
-
     def reload_splits
       reload_splits_table
       reload_metadata
@@ -27,7 +21,7 @@ module Multisplit
     def open_settings(path)
       return if path.nil?
       Data.open_settings(path)
-      reload_window
+      visit("multisplit.rb")
     end
 
     def save_splits(path)

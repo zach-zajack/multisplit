@@ -19,7 +19,9 @@ module Multisplit
     extend Times
     extend Metadata
 
-    reload_window
+    background Data.colors["background"]
+    style Shoes::Title, stroke: Data.colors["normal-text"]
+    style Shoes::Para, stroke: Data.colors["normal-text"], weight: "bold"
 
     @body = stack margin: 15
 
