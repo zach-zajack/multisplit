@@ -21,7 +21,8 @@ module Multisplit
     def open_settings(path)
       return if path.nil?
       Data.open_settings(path)
-      visit("multisplit.rb")
+      Multisplit.open_app
+      close
     end
 
     def save_splits(path)
