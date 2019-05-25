@@ -1,17 +1,18 @@
 module Multisplit
   class Splits < BasicSplits
-    attr_reader :names, :route, :metadata, \
+    attr_reader :names, :route, :metadata, :path, \
       :times, :bests, :index, :live_times, :live_bests
 
     def initialize(app, path = nil)
-      @app      = app
-      @splits   = YAML.load(File.read(path))
-      @names    = @splits["names"]
-      @route    = Route.new(@splits["route"])
+      @app    = app
+      @path   = path
+      @splits = YAML.load(File.read(path))
+      @names  = @splits["names"]
+      @route  = Route.new(@splits["route"])
+      @times  = @splits["personal-best"] || {}
+      @bests  = @splits["sum-of-best"]   || {}
       @metadata = @splits["metadata"]
-      @times    = @splits["personal-best"] || {}
-      @bests    = @splits["sum-of-best"]   || {}
-      @timer    = Timer.new(@metadata["offset (sec)"])
+      @timer  = Timer.new(@metadata["offset (sec)"])
       reset
     end
 

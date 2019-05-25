@@ -15,8 +15,8 @@ module Multisplit
       best = !(prev_best.nil? || prev_time.nil? || prev_best < prev_time)
       colorized = colorize_delta(prev_best, prev_time, best)
       flow do
-        para "Prev. segment:"
-        para colorized.first, stroke: colorized.last
+        para "Prev. segment:", margin: 5
+        para colorized.first,  margin: 5, stroke: colorized.last
       end
     end
 
@@ -26,11 +26,11 @@ module Multisplit
       comp = @splits.times[name]
       diff = best.nil? || @splits.index.negative? || comp.nil? ? \
         Data.splits["text-when-empty"] : stringify(comp - best)
-      para "Possible timesave: #{diff}"
+      para "Possible timesave: #{diff}", margin: 5
     end
 
     def sum_of_best
-      para "Sum of best: #{@splits.sum_of_best}"
+      para "Sum of best: #{@splits.sum_of_best}", margin: 5
     end
   end
 end

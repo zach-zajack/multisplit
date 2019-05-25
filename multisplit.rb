@@ -19,22 +19,23 @@ module Multisplit
     extend Times
     extend Metadata
 
-    style Shoes::Title, stroke: Data.colors["normal-text"]
-    style Shoes::Para,  stroke: Data.colors["normal-text"], weight: "bold"
-
-    background Data.colors["background"]
+    reload_window
 
     @body = stack margin: 15
 
     path = Data.app_data[:splits]
-    path.nil? ? open_basic : open_splits(path)
-
+    begin
+      return if path.nil?
+      open_splits(path)
+    rescue
+      open_basic
+    end
     animate(60) { display_timer }
 
     keypress do |key|
       case key.to_s
       when "control_c" then open_basic
-      when "control_s" then save_splits(@path)
+      when "control_s" then save_splits(@splits.path)
       when "control_S" then save_splits(ask_open_file)
       when "control_o" then open_splits(ask_open_file)
       when "control_e" then open_settings(ask_open_file)
