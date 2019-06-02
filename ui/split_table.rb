@@ -68,13 +68,14 @@ module Multisplit
     def scroll(array)
       total = Data.splits["total-splits"]
       max = names.length - total
+      max = 0 unless max.positive?
       prev_shown = total - Data.splits["upcoming-splits"]
 
       hidden = @splits.index - prev_shown
       hidden = 0 if hidden.negative?
       hidden = max if hidden > max
 
-      if Data.splits["lock-last-split"]
+      if Data.splits["lock-last-split"] && max.positive?
         return array[hidden, total - 1] << array[-1]
       else
         return array[hidden, total]
