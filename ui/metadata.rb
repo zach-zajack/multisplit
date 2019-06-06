@@ -12,7 +12,8 @@ module Multisplit
       prev = @splits.prev_name
       prev_best = @splits.bests[prev]
       prev_time = @splits.live_times[prev]
-      best = !(prev_best.nil? || prev_time.nil? || prev_best < prev_time)
+      best = !(prev_best.nil? || prev_time.nil? \
+        || prev_time == "-" || prev_best < prev_time)
       colorized = colorize_delta(prev_best, prev_time, best)
       flow do
         para "Prev. segment:", margin: 5
