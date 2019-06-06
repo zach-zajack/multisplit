@@ -25,6 +25,7 @@ module Multisplit
       style Shoes::Title, stroke: Data.colors["normal-text"]
       style Shoes::Para, stroke: Data.colors["normal-text"], weight: "bold"
 
+      @scroll = 0
       @body = stack margin: 15
 
       path = Data.app_data[:splits]
@@ -49,6 +50,8 @@ module Multisplit
         when Data.hotkeys["pause"] then @splits.pause
         when Data.hotkeys["next-split"]  then @splits.next
         when Data.hotkeys["prev-split"]  then @splits.prev
+        when Data.hotkeys["scroll-up"]   then @scroll -= 1
+        when Data.hotkeys["scroll-down"] then @scroll += 1
         when Data.hotkeys["toggle-best"] then @splits.toggle_best
         when /[123456789]/ then @splits.change_route(key.to_i)
         end

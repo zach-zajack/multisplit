@@ -22,6 +22,7 @@ module Multisplit
     end
 
     def split
+      @app.reset_scroll
       return if @finished
       add_time unless @timer.counting_down?
       @index = 0 if @timer.reset?

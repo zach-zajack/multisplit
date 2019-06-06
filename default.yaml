@@ -38,4 +38,6 @@ hotkeys:
   pause:       "p"
   next-split:  "down"
   prev-split:  "up"
+  scroll-up:   "page_up"
+  scroll-down: "page_down"
   toggle-best: "b"
