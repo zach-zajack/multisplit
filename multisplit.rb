@@ -47,8 +47,9 @@ module Multisplit
         when Data.hotkeys["split"] then @splits.split
         when Data.hotkeys["reset"] then @splits.reset
         when Data.hotkeys["pause"] then @splits.pause
-        when Data.hotkeys["next"]  then @splits.next
-        when Data.hotkeys["prev"]  then @splits.prev
+        when Data.hotkeys["next-split"]  then @splits.next
+        when Data.hotkeys["prev-split"]  then @splits.prev
+        when Data.hotkeys["toggle-best"] then @splits.toggle_best
         when /[123456789]/ then @splits.change_route(key.to_i)
         end
         reload_splits unless @splits.basic?

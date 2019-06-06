@@ -13,6 +13,7 @@ module Multisplit
       @bests  = @splits["sum-of-best"]   || {}
       @metadata = @splits["metadata"]
       @timer  = Timer.new(@metadata["offset (sec)"])
+      @display_best = false
       reset
     end
 
@@ -68,6 +69,14 @@ module Multisplit
 
     def change_route(num)
       @route.switch(@index, num - 1)
+    end
+
+    def toggle_best
+      @display_best = !@display_best
+    end
+
+    def comp
+      @display_best ? @bests : @times
     end
 
     def sum(times)

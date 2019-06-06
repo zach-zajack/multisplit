@@ -24,7 +24,7 @@ module Multisplit
     def pos_timesave
       name = @splits.name
       best = @splits.bests[name]
-      comp = @splits.times[name]
+      comp = @splits.comp[name]
       diff = best.nil? || @splits.index.negative? || comp.nil? ? \
         Data.splits["text-when-empty"] : stringify(comp - best)
       para "Possible timesave: #{diff}", margin: 5

@@ -33,8 +33,9 @@ colors:
   new-time:    "#eee"
 
 hotkeys:
-  split: " "
-  reset: "-"
-  pause: "p"
-  next:  "down"
-  prev:  "up"
+  split:       " "
+  reset:       "-"
+  pause:       "p"
+  next-split:  "down"
+  prev-split:  "up"
+  toggle-best: "b"
