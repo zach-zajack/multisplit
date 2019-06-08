@@ -75,7 +75,7 @@ module Multisplit
       show_last = Data.splits["lock-last-split"] && max.positive?
       prev_shown = total - Data.splits["upcoming-splits"] - (show_last ? 2 : 1)
       hidden = [0, @splits.index - prev_shown, max].sort[1]
-      @scroll = [0, @scroll, max].sort[1]
+      @scroll = [-hidden, @scroll, max].sort[1]
 
       if show_last
         return array[@scroll + hidden, total - 1] << array[-1]
