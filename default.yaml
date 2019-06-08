@@ -7,7 +7,7 @@ window:
 splits:
   text-when-empty: "-"
   total-splits: 10
-  upcoming-splits: 3
+  upcoming-splits: 2
   col1: "delta"
   col2: "comparison"
   lock-last-split: true
