@@ -25,7 +25,7 @@ module Multisplit
       name = @splits.name
       best = @splits.bests[name]
       comp = @splits.comp[name]
-      diff = best.nil? || @splits.index.negative? || comp.nil? ? \
+      diff = best.nil? || comp == "-" || @splits.index.negative? || comp.nil? ? \
         Data.splits["text-when-empty"] : stringify(comp - best)
       para "Possible timesave: #{diff}", margin: 5
     end
